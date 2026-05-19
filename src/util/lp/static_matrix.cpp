@@ -29,7 +29,7 @@ static_matrix<T, X>::static_matrix(static_matrix const &A, unsigned * /* basis *
     init_row_columns(m, m);
     while (m--) {
         for (auto & col : A.m_columns[m]){
-            set(col.m_i, m, A.get_value_of_column_cell(col));
+            set(col.m_i, m, col.m_value);
         }
     }
 }
@@ -265,7 +265,7 @@ template <typename T, typename X>    void static_matrix<T, X>::check_consistency
         for (auto & t : m_columns[i]) {
             std::pair<unsigned, unsigned> p(t.m_i, i);
             lean_assert(by_cols.find(p) == by_cols.end());
-            by_cols[p] = get_value_of_column_cell(t);
+            by_cols[p] = t.m_value;
         }
     }
     lean_assert(by_rows.size() == by_cols.size());
